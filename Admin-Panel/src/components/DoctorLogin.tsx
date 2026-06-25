@@ -64,7 +64,7 @@ const DoctorLogin: React.FC = () => {
                     </button>
 
                     <p className='mt-4 text-sm text-gray-500 text-center sm:text-left'>
-                        Admin Login? <a href="/DoctorLogin" className='text-blue-500 hover:underline'>Click Here</a>
+                        Admin Login? <a href="/AdminLogin" className='text-blue-500 hover:underline'>Click Here</a>
                     </p>
                 </div>
             </div>

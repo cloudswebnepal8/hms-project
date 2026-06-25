@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import AdminLogin from './components/Admin/AdminLogin';
 import DoctorLogin from './components/DoctorLogin';
@@ -10,7 +10,9 @@ const App: React.FC = () => {
       <div>
         <Routes>
           <Route path="/" element={<AdminLogin />} />
+          <Route path="/AdminLogin" element={<AdminLogin />} />
           <Route path="/DoctorLogin" element={<DoctorLogin />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
     </BrowserRouter>

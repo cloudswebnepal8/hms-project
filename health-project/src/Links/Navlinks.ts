@@ -33,7 +33,7 @@ export const Navlinks =
     {
         id:5,
         name:"Admin/Doctor Panel",
-        link:"http://localhost:5173/AdminLogin",
+        link:"http://localhost:5174/AdminLogin",
         color: "bg-[#5f6fff] text-white px-3 py-1 rounded-md text-xs font-medium",
         isExternal: true
         
