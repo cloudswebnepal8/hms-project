@@ -1,0 +1,7 @@
+{
+  "name": "prescripto-root",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "npx concurrently \"npm run dev --prefix health-project\" \"npm run dev --prefix Admin-Panel\""
+  }
+}

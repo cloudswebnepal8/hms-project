@@ -31,7 +31,7 @@ const Home = () => {
                                 <p>schedule your appointment hassle-free.</p>
                             </div>
                         </div>
-                        <a href="/Home">
+                        <a href="#speciality-section">
                             <button className="bg-white text-gray-600 text-sm px-8 py-3 rounded-full mt-4 hover:scale-105 transition-all">
                                 Book Appointment →
                             </button>
@@ -45,7 +45,7 @@ const Home = () => {
                 </div>
             </div>
             <div className="flex flex-col items-center mt-10">
-                <h1 className="font-medium text-3xl">Find by Speciality</h1>
+                <h1 id="speciality-section" className=" font-medium text-3xl">Find by Speciality</h1>
                 <div className="pt-4 text-xs flex flex-col items-center text-g">
                     <p>Simply browse through our extensive list of trusted</p>
                     <p>doctors, schedule your appointment hassle-free.</p>

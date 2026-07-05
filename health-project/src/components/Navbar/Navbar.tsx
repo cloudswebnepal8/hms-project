@@ -3,7 +3,7 @@ import { Navlinks } from '../../Links/Navlinks';
 import { Link, useLocation } from 'react-router-dom'; 
 
 const Navbar = () => {
-    const location = useLocation(); //this function track the location of the link
+    const location = useLocation(); // This function tracks the location of the link
 
     return (
         <div className="sticky top-0 z-50 bg-white px-4 sm:px-[10%]">
@@ -13,18 +13,19 @@ const Navbar = () => {
                 </div>
                 <ul className="flex gap-6 items-center list-none p-0 m-0 ">
                     {Navlinks.map((items) => {
-                        //tis code  mattch against location.pathname instead of activeId state
                         const isActive = location.pathname === items.link || (items.link !== '/' && location.pathname.startsWith(items.link));
                         const isAdminBtn = items.id === 5;
 
                         return (
                             <li
                                 key={items.id}
-                                className={`cursor-pointer transition-all ${items.color ||'py-1'}`}
+                                className={`cursor-pointer transition-all ${items.color || 'py-1'}`}
                             >
-                                {/*if used liink instead of a it wiilnot reload the page agaain and again */}
                                 <Link
                                     to={items.link}
+                                    // These open the Admin/Doctor panel in a new browser tab automatically
+                                    target={items.isExternal ? "_blank" : "_self"}
+                                    rel={items.isExternal ? "noopener noreferrer" : undefined}
                                     className={`block no-underline text-sm font-medium ${
                                         isAdminBtn ? 'text-white' : 'text-black'
                                     }`}
@@ -41,8 +42,8 @@ const Navbar = () => {
 
                 <a href="/Account">
                     <button className="bg-primary text-white text-s font-normal px-4 py-1 rounded-full hidden md:block cursor-pointer">
-                    Login
-                </button>
+                        Login
+                    </button>
                 </a>
             </div>
         </div>
