@@ -20,10 +20,10 @@ const Footer = () => {
                             Company
                         </h3>
                         <ul className="text-sm text-gray-600 font-medium flex flex-col gap-2">
-                            <li className="hover:text-black cursor-pointer">Home</li>
-                            <li className="hover:text-black cursor-pointer">About Us</li>
-                            <li className="hover:text-black cursor-pointer">Contact Us</li>
-                            <li className="hover:text-black cursor-pointer">Privacy Policy</li>
+                           <a href="/Home"> <li className="hover:text-black cursor-pointer">Home</li></a>
+                            <a href="/About"> <li className="hover:text-black cursor-pointer">About Us</li></a>
+                            <a href="/Contact"> <li className="hover:text-black cursor-pointer">Contact Us</li></a>
+                            <a href="/Privacy-Policy"> <li className="hover:text-black cursor-pointer">Privacy Policy</li></a>
                         </ul>
                     </div>
                     <div className="flex flex-col gap-4 pt-2">
