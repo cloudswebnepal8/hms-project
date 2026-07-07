@@ -1,21 +1,66 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import axios from 'axios';
 
 const DoctorLogin: React.FC = () => {
+    // 1. Define Local States for Form Inputs & Feedback
+    const [email, setEmail] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
     const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false)
+    const [error, setError] = useState<string>('')
 
     const togglePasswordVisibility = (e: React.MouseEvent<HTMLButtonElement>): void => {
         e.preventDefault()
         setIsPasswordVisible((prevState) => !prevState)
     }
 
+    // 2. Form Submission Handler for Doctor Authentication
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+        e.preventDefault()
+        setError('')
+
+        const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000'
+
+        try {
+            console.log("Sending doctor credentials to Django API...")
+            const response = await axios.post(`${BASE_URL}/api/token/`, {
+                email: email,
+                password: password
+            })
+
+            console.log("Doctor Login successful!", response.data)
+            
+            // Save the secure tokens to localStorage
+            localStorage.setItem('access_token', response.data.access)
+            localStorage.setItem('refresh_token', response.data.refresh)
+            localStorage.setItem('is_doctor', 'true') // Helper flag to distinguish doctor sessions
+
+            // Redirect back to home page or doctor dashboard
+            window.location.href = '/'
+
+        } catch (err: any) {
+            console.error("Doctor Login request failed:", err)
+            if (err.response?.status === 401) {
+                setError('Invalid doctor credentials. Please try again.')
+            } else {
+                setError('Login failed. Unable to connect to the server.')
+            }
+        }
+    }
+
     return (
         <div className='min-h-screen flex items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8'>
-            <div className='w-full max-w-md border border-gray-300 shadow-lg rounded-lg bg-white overflow-hidden'>
+            <form 
+                onSubmit={handleSubmit}
+                className='w-full max-w-md border border-gray-300 shadow-lg rounded-lg bg-white overflow-hidden'
+            >
                 <div className='flex flex-col items-stretch p-6 sm:p-10 w-full'>
 
                     <p className='text-2xl font-bold text-center w-full text-gray-600 mb-6'>
                         <span className='text-blue-600'>Doctor</span> Login
                     </p>
+
+                    {/* Error Feedback Block */}
+                    {error && <p className='mb-4 text-sm text-red-500 font-medium text-center'>{error}</p>}
 
                     <label htmlFor="email" className='text-gray-500 font-normal text-sm sm:text-base'>
                         Email
@@ -23,6 +68,9 @@ const DoctorLogin: React.FC = () => {
                     <input
                         type="email"
                         id='email'
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
                         className='border border-gray-300 rounded-md p-2 w-full mt-1 mb-4 focus:border-blue-400 focus:ring-1 focus:ring-blue-400 outline-none transition-colors duration-500'
                         placeholder='Enter your email'
                     />
@@ -34,6 +82,9 @@ const DoctorLogin: React.FC = () => {
                         <input
                             type={isPasswordVisible ? "text" : "password"}
                             id="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
                             className='border border-gray-300 rounded-md p-2 w-full pr-10 focus:border-blue-400 focus:ring-1 focus:ring-blue-400 outline-none transition-colors duration-500'
                             placeholder='Enter your password'
                         />
@@ -58,8 +109,7 @@ const DoctorLogin: React.FC = () => {
                         </button>
                     </div>
 
-                    {/* 3. Replaced px-33 with full width element centering */}
-                    <button className="w-full bg-blue-600 rounded-lg py-2 text-white font-medium hover:bg-blue-700 transition-colors duration-200">
+                    <button type="submit" className="w-full bg-blue-600 rounded-lg py-2 text-white font-medium hover:bg-blue-700 transition-colors duration-200">
                         Login
                     </button>
 
@@ -67,9 +117,9 @@ const DoctorLogin: React.FC = () => {
                         Admin Login? <a href="/AdminLogin" className='text-blue-500 hover:underline'>Click Here</a>
                     </p>
                 </div>
-            </div>
+            </form>
         </div>
     )
 }
 
-export default DoctorLogin
+export default DoctorLogin;
